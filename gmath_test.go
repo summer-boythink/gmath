@@ -36,3 +36,14 @@ func TestSort(t *testing.T) {
 		t.Error("want [2,9,11,22],but get", arr)
 	}
 }
+
+func TestFilter(t *testing.T) {
+	arr := []float64{11.00,12.02,13}
+	fn := func (val float64) bool {
+		return val > 12
+	}
+	res := Filter(arr,fn)
+	if !reflect.DeepEqual(res,[]float64{12.02,13}){
+		t.Error("want [12.02 13],but get",res)
+	}
+}
