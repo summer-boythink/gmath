@@ -38,12 +38,30 @@ func TestSort(t *testing.T) {
 }
 
 func TestFilter(t *testing.T) {
-	arr := []float64{11.00,12.02,13}
-	fn := func (val float64) bool {
+	arr := []float64{11.00, 12.02, 13}
+	fn := func(val float64) bool {
 		return val > 12
 	}
-	res := Filter(arr,fn)
-	if !reflect.DeepEqual(res,[]float64{12.02,13}){
-		t.Error("want [12.02 13],but get",res)
+	res := Filter(arr, fn)
+	if !reflect.DeepEqual(res, []float64{12.02, 13}) {
+		t.Error("want [12.02 13],but get", res)
+	}
+}
+
+func TestReduce(t *testing.T) {
+	arr := []uint16{11, 22, 134}
+	fn := func(a, b uint16) uint16 {
+		return a + b
+	}
+	res1 := Reduce(arr, fn)
+	want1 := SumNumber(arr...)
+	if res1 != want1 {
+		t.Errorf(" want %d,but get %d", want1, res1)
+	}
+
+	res2 := Reduce(arr, fn, 122)
+	want2 := SumNumber(arr...) + 122
+	if res2 != want2 {
+		t.Errorf(" want %d,but get %d", want2, res2)
 	}
 }

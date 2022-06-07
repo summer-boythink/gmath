@@ -1,10 +1,12 @@
 package gmath
 
+import "log"
+
 type Number interface {
-	int | uint | uint8 | uint32 | uint64 | int8 | int16 | int32 | int64 | float32 | float64
+	int | uint | uint8 | uint16 | uint32 | uint64 | int8 | int16 | int32 | int64 | float32 | float64
 }
 
-// Returns the sum of args
+// SumNumber Returns the sum of args
 func SumNumber[v Number](args ...v) v {
 	var res v
 	for _, val := range args {
@@ -74,12 +76,31 @@ func partition[v Number](arr []v, left int, right int, compareFn func(v, v) v) i
 }
 
 //Filter return a new slice filtered by fn
-func Filter[v Number](arr []v,fn func(v) bool) []v {
-	res := []v{}
-	for _,val := range arr {
+func Filter[v Number](arr []v, fn func(v) bool) []v {
+	var res []v
+	for _, val := range arr {
 		if fn(val) {
 			res = append(res, val)
 		}
+	}
+	return res
+}
+
+//Reduce traverses the set of elements one by one,
+//and in each step the value of the current element is added to
+//the calculated result of the previous step
+func Reduce[v Number](arr []v, fn func(v, v) v, initVal ...v) v {
+	var res v
+	if initVal != nil {
+		if len(initVal) > 1 {
+			log.Fatalln("\033[31m[warning]:\033[0m", "len(initVal) has to be 1")
+		}
+		res = fn(initVal[0], arr[0])
+	} else {
+		res = arr[0]
+	}
+	for i := 1; i < len(arr); i++ {
+		res = fn(res, arr[i])
 	}
 	return res
 }
