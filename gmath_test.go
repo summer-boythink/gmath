@@ -65,3 +65,11 @@ func TestReduce(t *testing.T) {
 		t.Errorf(" want %d,but get %d", want2, res2)
 	}
 }
+
+func TestReverse(t *testing.T) {
+	arr := []int{1, 23, 5, 2, 12}
+	Reverse(arr)
+	if !reflect.DeepEqual(arr, []int{12, 2, 5, 23, 1}) {
+		t.Error("want []int{12,2,5,23,1},but get", arr)
+	}
+}

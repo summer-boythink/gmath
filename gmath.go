@@ -104,3 +104,19 @@ func Reduce[v Number](arr []v, fn func(v, v) v, initVal ...v) v {
 	}
 	return res
 }
+
+//Reverse the position of the elements in the array and returns the array
+//This method will change the original array
+func Reverse[v Number](arr []v) []v {
+	start := 0
+	end := len(arr) - 1
+	var temp v
+	for start < end {
+		temp = arr[start]
+		arr[start] = arr[end]
+		arr[end] = temp
+		start++
+		end--
+	}
+	return arr
+}
